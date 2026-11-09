@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
@@ -13,11 +13,10 @@ def list_notes():
   return {"notes": notes}
 
 
-@app.get("/notes/{note_id}")
+@app.get("/note/{note_id}")
 def get_note(note_id: int):
   note = next((note for note in notes if note["id"] == note_id), None)
   if note:
     return {"note": note}
   else:
     raise HTTPException(status_code=404, detail="Note not found")
-  return {"notes": notes}
