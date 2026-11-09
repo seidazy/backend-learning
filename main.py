@@ -11,3 +11,13 @@ notes = [
 @app.get("/notes")
 def list_notes():
   return {"notes": notes}
+
+
+@app.get("/notes/{note_id}")
+def get_note(note_id: int):
+  note = next((note for note in notes if note["id"] == note_id), None)
+  if note:
+    return {"note": note}
+  else:
+    raise HTTPException(status_code=404, detail="Note not found")
+  return {"notes": notes}
