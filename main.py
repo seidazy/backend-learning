@@ -20,3 +20,9 @@ def get_note(note_id: int):
     return {"note": note}
   else:
     raise HTTPException(status_code=404, detail="Note not found")
+
+
+@app.post("/notes")
+def create_note(note: dict):
+  notes.append(note)
+  return {"note": note}
