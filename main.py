@@ -47,3 +47,13 @@ def delete_note(note_id: int):
     return {"message": "Note deleted"}
   else:
     raise HTTPException(status_code=404, detail="Note not found")
+
+@app.put("/notes/{note_id}")
+def update_note(note_id: int, note: NoteIn):
+  note = next((note for note in notes if note["id"] == note_id), None)
+  if note:
+    note["title"] = note.title
+    note["description"] = note.description
+    return {"note": note}
+  else:
+    raise HTTPException(status_code=404, detail="Note not found")
