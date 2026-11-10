@@ -29,9 +29,10 @@ def get_note(note_id: int):
 
 @app.post("/notes")
 def create_note(note: NoteIn):
-  notes.append({
+  new_note = {
     "id": len(notes) + 1,
     "title": note.title,
     "description": note.description,
-  })
-  return {"note": note}
+  }
+  notes.append(new_note)
+  return {"note": new_note}
