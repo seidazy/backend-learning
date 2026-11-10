@@ -36,3 +36,13 @@ def create_note(note: NoteIn):
   }
   notes.append(new_note)
   return {"note": new_note}
+
+
+@app.delete("/notes/{note_id}")
+def delete_note(note_id: int):
+  note = next((note for note in notes if note["id"] == note_id), None)
+  if note:
+    notes.remove(note)
+    return {"message": "Note deleted"}
+  else:
+    raise HTTPException(status_code=404, detail="Note not found")
