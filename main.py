@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -7,6 +8,10 @@ notes = [
   {"id": 2, "title": "Note 2", "description": "Description 2"},
   {"id": 3, "title": "Note 3", "description": "Description 3"},
 ]
+
+class NoteIn(BaseModel):
+  title: str
+  description: str
 
 @app.get("/notes")
 def list_notes():
@@ -23,6 +28,10 @@ def get_note(note_id: int):
 
 
 @app.post("/notes")
-def create_note(note: dict):
-  notes.append(note)
+def create_note(note: NoteIn):
+  notes.append({
+    "id": len(notes) + 1,
+    "title": note.title,
+    "description": note.description,
+  })
   return {"note": note}
