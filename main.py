@@ -29,8 +29,9 @@ def get_note(note_id: int):
 
 @app.post("/notes")
 def create_note(note: NoteIn):
+  new_id = max((n["id"] for n in notes), default=0) + 1
   new_note = {
-    "id": len(notes) + 1,
+    "id": new_id,
     "title": note.title,
     "description": note.description,
   }
